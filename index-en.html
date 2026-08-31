@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreNode | $CNDE</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    colors: {
+                        neonBlue: '#00f3ff',
+                        neonPurple: '#9d00ff',
+                        darkBg: '#05050a',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #05050a;
+            color: #ffffff;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            z-index: -2;
+        }
+        .node-orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: -1; animation: pulse 8s infinite alternate ease-in-out; }
+        .orb-1 { top: -10%; right: 10%; width: 350px; height: 350px; background: rgba(0, 243, 255, 0.15); }
+        .orb-2 { bottom: -10%; left: 10%; width: 450px; height: 450px; background: rgba(157, 0, 255, 0.15); }
+        @keyframes pulse { 0% { transform: scale(1) translateY(0); opacity: 0.8; } 100% { transform: scale(1.1) translateY(30px); opacity: 1; } }
+        .glass-card {
+            background: rgba(15, 15, 20, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; transition: all 0.3s ease;
+        }
+        .glass-card:hover { border-color: rgba(0, 243, 255, 0.4); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1); }
+        .text-gradient { background: linear-gradient(90deg, #00f3ff, #9d00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .timeline-border { border-left: 2px dashed rgba(157, 0, 255, 0.5); }
+    </style>
+</head>
+<body class="antialiased relative min-h-screen">
+
+    <div class="bg-grid"></div>
+    <div class="node-orb orb-1"></div>
+    <div class="node-orb orb-2"></div>
+
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-lg shadow-[0_0_15px_rgba(0,243,255,0.5)]">C</div>
+            <span class="text-2xl font-black tracking-wider">CoreNode</span>
+            <span class="bg-white/10 text-neonBlue px-2 py-1 rounded-md text-xs font-bold border border-white/10 ml-2">$CNDE</span>
+        </div>
+        <div class="hidden md:flex items-center gap-6 text-sm font-bold text-gray-300">
+            <a href="#networks" class="hover:text-neonBlue transition">Networks</a>
+            <a href="#tokenomics" class="hover:text-neonBlue transition">Tokenomics</a>
+            <a href="#roadmap" class="hover:text-neonBlue transition">Roadmap</a>
+            <a href="index.html" class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition text-white">AR / العربية</a>
+        </div>
+        <a href="dashboard.html" class="hidden md:block glass-card px-6 py-2 text-sm font-bold hover:bg-white/5">Dev Portal</a>
+    </nav>
+
+    <main class="container mx-auto px-6 pt-20 pb-20 text-center max-w-4xl relative z-10">
+        <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-neonPurple/30 bg-neonPurple/10 text-neonPurple text-sm font-semibold">
+            🚀 Next-Gen DePIN Infrastructure
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+            No more downtime.<br> 
+            Faster, smarter <span class="text-gradient">RPC Nodes</span>.
+        </h1>
+        
+        <p class="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto">
+            We provide developers with high-performance, decentralized infrastructure. Connect your dApps to mainnets and testnets securely, rapidly, and with zero downtime.
+        </p>
+
+        <div class="flex flex-col md:flex-row gap-4 justify-center">
+            <a href="dashboard.html" class="bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-4 px-8 rounded-xl text-lg transition-transform hover:scale-105 shadow-[0_0_20px_rgba(157,0,255,0.4)]">
+                Start Building
+            </a>
+            <a href="whitepaper.html" class="glass-card text-white font-bold py-4 px-8 rounded-xl text-lg flex items-center justify-center">
+                Read Whitepaper
+            </a>
+            <a href="index.html" class="md:hidden glass-card text-white font-bold py-3 px-8 rounded-xl text-md flex items-center justify-center">
+                🌐 Switch to Arabic
+            </a>
+        </div>
+    </main>
+
+    <section id="networks" class="py-12 border-y border-white/5 bg-black/20 backdrop-blur-sm relative z-10">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm text-gray-400 font-bold mb-6">Smart routing supported for top decentralized networks & protocols</p>
+            <div class="flex flex-wrap justify-center gap-6 md:gap-12 opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
+                <div class="flex items-center gap-2"><span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span><span class="text-xl font-black tracking-widest">Eniac Mainnet</span></div>
+                <div class="flex items-center gap-2"><span class="w-3 h-3 bg-yellow-500 rounded-full animate-pulse"></span><span class="text-xl font-black tracking-widest">Eniac Testnet</span></div>
+                <div class="flex items-center gap-2"><span class="text-xl font-black tracking-widest text-blue-400">AirSwap OTC</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tokenomics" class="container mx-auto px-6 py-20 relative z-10">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-black mb-4">The Power of <span class="text-neonBlue">$CNDE</span></h2>
+            <p class="text-gray-400">The core engine of our decentralized infrastructure and market making economy</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            <div class="glass-card p-6 text-center">
+                <div class="text-4xl mb-4">⛽</div>
+                <h3 class="text-xl font-bold mb-2 text-neonBlue">Pay for Requests</h3>
+                <p class="text-sm text-gray-400">Use the token to pay for premium RPC link generation on high-traffic networks without rate limits.</p>
+            </div>
+            <div class="glass-card p-6 text-center">
+                <div class="text-4xl mb-4">💧</div>
+                <h3 class="text-xl font-bold mb-2 text-neonPurple">Liquidity Provision</h3>
+                <p class="text-sm text-gray-400">Stake tokens to participate in liquidity pools, supporting network stability and earning platform yields.</p>
+            </div>
+            <div class="glass-card p-6 text-center">
+                <div class="text-4xl mb-4">⚡</div>
+                <h3 class="text-xl font-bold mb-2 text-white">Whale Trades Priority</h3>
+                <p class="text-sm text-gray-400">Exclusive discounts when using execution algorithms (TWAP) and direct P2P protocols.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap" class="container mx-auto px-6 py-20 border-t border-white/5 relative z-10">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-black mb-4">Roadmap</h2>
+            <p class="text-gray-400">Our upcoming steps to scale the DePIN ecosystem</p>
+        </div>
+        <div class="max-w-3xl mx-auto timeline-border pl-8 relative">
+            <div class="mb-10 relative">
+                <span class="absolute -left-[43px] top-1 w-6 h-6 bg-neonBlue rounded-full shadow-[0_0_10px_#00f3ff]"></span>
+                <h3 class="text-2xl font-bold text-neonBlue mb-2">Phase 1: Infrastructure</h3>
+                <p class="text-gray-400">Launch developer dashboard, support Eniac Network (Mainnet/Testnet), and ensure 99.9% node uptime.</p>
+            </div>
+            <div class="mb-10 relative">
+                <span class="absolute -left-[43px] top-1 w-6 h-6 bg-neonPurple rounded-full shadow-[0_0_10px_#9d00ff]"></span>
+                <h3 class="text-2xl font-bold text-neonPurple mb-2">Phase 2: Smart Finance</h3>
+                <p class="text-gray-400">Integrate money streaming protocols (e.g., Sablier) and implement off-chain OTC atomic swaps.</p>
+            </div>
+            <div class="relative">
+                <span class="absolute -left-[41px] top-1 w-5 h-5 border-2 border-gray-500 rounded-full bg-darkBg"></span>
+                <h3 class="text-2xl font-bold text-white mb-2">Phase 3: Institutional Expansion</h3>
+                <p class="text-gray-400">Expand KOL marketing campaigns and initiate listing procedures on centralized exchanges (BingX, KuCoin, CoinEx).</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-white/10 bg-black/40 mt-10 relative z-10">
+        <div class="container mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2 opacity-80">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-sm">C</div>
+                <span class="text-lg font-black tracking-wider">CoreNode</span>
+            </div>
+            <div class="flex gap-6 text-sm text-gray-400 font-bold">
+                <a href="#" class="hover:text-white transition">Telegram</a>
+                <a href="#" class="hover:text-white transition">X (Twitter)</a>
+                <a href="#" class="hover:text-white transition">Institutional (Lark)</a>
+            </div>
+            <div class="text-xs text-gray-500">
+                &copy; 2026 CoreNode Web3 Infrastructure. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
