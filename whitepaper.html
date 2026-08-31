@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الورقة البيضاء | CoreNode</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+                    colors: {
+                        neonBlue: '#00f3ff',
+                        neonPurple: '#9d00ff',
+                        darkBg: '#05050a',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #05050a;
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+        }
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            z-index: -2;
+        }
+        .glass-panel {
+            background: rgba(15, 15, 20, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, #00f3ff, #9d00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #9d00ff, #00f3ff);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen relative pb-20">
+
+    <div class="bg-grid"></div>
+
+    <!-- شريط التنقل العلوي -->
+    <nav class="glass-panel mx-4 mt-4 px-6 py-4 flex justify-between items-center sticky top-4 z-50">
+        <div class="flex items-center gap-3">
+            <a href="index.html" class="w-8 h-8 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-sm hover:scale-110 transition-transform">C</a>
+            <span class="text-xl font-bold">الورقة البيضاء v1.0</span>
+        </div>
+        <a href="dashboard.html" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-md border border-white/10 text-sm font-bold transition-colors">
+            لوحة المطورين
+        </a>
+    </nav>
+
+    <main class="container mx-auto px-4 mt-12 max-w-4xl">
+        
+        <!-- مقدمة الورقة البيضاء -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-black mb-4">شبكة <span class="text-gradient">CoreNode</span></h1>
+            <p class="text-gray-400 text-lg">بنية تحتية لامركزية (DePIN) للجيل القادم من تطبيقات Web3</p>
+        </div>
+
+        <!-- القسم الأول: المشكلة والحل -->
+        <section class="glass-panel p-8 mb-8 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-2 h-full bg-neonPurple"></div>
+            <h2 class="text-2xl font-bold mb-4">1. المشكلة والحل التكنولوجي</h2>
+            <div class="space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+                <p><strong>المشكلة:</strong> تعتمد معظم التطبيقات اللامركزية (dApps) على مزودي خدمة مركزيين لنقاط الاتصال (RPC)، مما يخلق نقطة فشل مركزية (SPOF). هذا يؤدي إلى اختناقات في الشبكة (Rate Limits)، بطء الاستجابة، وانقطاعات متكررة تضر بتجربة المستخدم النهائي، فضلاً عن التكاليف الباهظة لتشغيل خوادم خاصة.</p>
+                <p><strong>الحل (CoreNode):</strong> شبكة بنية تحتية لامركزية مادية (DePIN) تقوم بتوزيع طلبات الـ RPC بذكاء عبر عقد (Nodes) متعددة ومستقلة حول العالم. نضمن وقت تشغيل (Uptime) بنسبة 99.9%، ونتيح للمطورين الوصول للشبكات مثل Eniac Network دون قيود، مع تقليل التكاليف التشغيلية.</p>
+            </div>
+        </section>
+
+        <!-- القسم الثاني: المعمارية التقنية -->
+        <section class="glass-panel p-8 mb-8 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-2 h-full bg-neonBlue"></div>
+            <h2 class="text-2xl font-bold mb-4">2. المعمارية التقنية (Architecture)</h2>
+            <ul class="space-y-4 text-gray-300 text-sm md:text-base">
+                <li class="flex items-start gap-3">
+                    <span class="text-neonBlue font-bold mt-1">⬡</span>
+                    <div>
+                        <strong class="text-white">التوجيه الذكي (Smart Routing):</strong> خوارزمية تقوم بتحليل حالة الشبكة وتوجيه طلبات المطور إلى أقرب وأسرع عقدة اتصال متاحة تلقائياً.
+                    </div>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-neonBlue font-bold mt-1">⬡</span>
+                    <div>
+                        <strong class="text-white">التبادل الذري (Atomic Swaps):</strong> دعم بروتوكولات الصفقات خارج السلسلة (Off-chain) مثل منصات AirSwap لتوفير بيئة P2P آمنة للمؤسسات.
+                    </div>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-neonBlue font-bold mt-1">⬡</span>
+                    <div>
+                        <strong class="text-white">توليد المفاتيح الديناميكي:</strong> نظام حماية متقدم يمنح كل مطور مفتاح API فريد يتم التحقق منه لامركزياً لمنع الهجمات الموزعة (DDoS).
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- القسم الثالث: اقتصاديات العملة -->
+        <section class="glass-panel p-8 mb-8 border border-neonPurple/30">
+            <h2 class="text-3xl font-black mb-6 text-center">3. اقتصاديات العملة (Tokenomics)</h2>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between mb-8 p-4 bg-black/40 rounded-lg border border-white/10">
+                <div>
+                    <h3 class="text-xl font-bold text-neonPurple">$CNDE</h3>
+                    <p class="text-gray-400 text-sm">رمز المنصة الأساسي</p>
+                </div>
+                <div class="text-left mt-4 md:mt-0">
+                    <p class="text-gray-400 text-sm">إجمالي المعروض (Total Supply)</p>
+                    <h3 class="text-xl font-bold font-mono text-neonBlue">100,000,000</h3>
+                </div>
+            </div>
+
+            <!-- التوزيع (Distribution) -->
+            <div class="space-y-5">
+                <div>
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="font-bold">مكافآت مشغلي العقد (Node Rewards)</span>
+                        <span class="text-neonBlue font-bold">40%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 40%;"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="font-bold">السيولة وصناعة السوق (Liquidity & MM)</span>
+                        <span class="text-neonPurple font-bold">20%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 20%;"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="font-bold">التسويق والشراكات (Ecosystem & KOLs)</span>
+                        <span class="text-neonBlue font-bold">15%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 15%;"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="font-bold">فريق التطوير (Core Team - مقفل لعامين)</span>
+                        <span class="text-gray-400 font-bold">15%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 15%; background: #6b7280;"></div></div>
+                </div>
+                <div>
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="font-bold">البيع العام (Public Sale)</span>
+                        <span class="text-gray-400 font-bold">10%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 10%; background: #6b7280;"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- القسم الرابع: حالات الاستخدام -->
+        <section class="glass-panel p-8 relative overflow-hidden">
+            <h2 class="text-2xl font-bold mb-4 text-center">4. استخدامات الرمز (Utility)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div class="bg-black/40 p-4 rounded-lg border border-white/5">
+                    <h4 class="font-bold text-neonBlue mb-2">⚡ الدفع مقابل الاستخدام (Pay-as-you-go)</h4>
+                    <p class="text-sm text-gray-400">يدفع المطورون رسوم استهلاك بيانات الـ RPC الكثيفة باستخدام رمز $CNDE.</p>
+                </div>
+                <div class="bg-black/40 p-4 rounded-lg border border-white/5">
+                    <h4 class="font-bold text-neonPurple mb-2">🔒 التخزين (Staking)</h4>
+                    <p class="text-sm text-gray-400">تخزين العملة ضروري لتشغيل العقد (Nodes) وضمان جودة الخدمة والمشاركة في السيولة.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>
