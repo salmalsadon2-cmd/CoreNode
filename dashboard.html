@@ -101,13 +101,15 @@
         <div class="glass-panel p-6">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                 <h2 class="text-2xl font-bold">روابط الـ RPC النشطة الخاصة بك</h2>
-                <button class="bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-2 px-6 rounded-lg text-sm hover:scale-105 transition-transform cursor-not-allowed opacity-80" title="سيتم التفعيل قريباً">
+                <button onclick="generateNewRPC()" class="bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-2 px-6 rounded-lg text-sm hover:scale-105 transition-transform shadow-[0_0_15px_rgba(157,0,255,0.4)]">
                     + توليد رابط RPC جديد
                 </button>
             </div>
 
-            <div class="space-y-4">
-                <!-- بطاقة Eniac Network Mainnet -->
+            <!-- حاوية الروابط -->
+            <div class="space-y-4" id="rpc-list">
+                
+                <!-- بطاقة Eniac Network Mainnet الأساسية -->
                 <div class="bg-black/40 border border-white/5 rounded-lg p-4 flex flex-col md:flex-row justify-between items-center gap-4 hover:border-neonBlue/50 transition-colors">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">E</div>
@@ -117,7 +119,7 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-3 w-full md:w-auto">
-                        <code class="bg-black text-neonBlue px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">https://mainnet.corenode.io/v1/eniac/your-api-key</code>
+                        <code class="bg-black text-neonBlue px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">https://mainnet.corenode.io/v1/eniac/a1b2c3d4e5</code>
                         <button onclick="copyRPC(this)" class="bg-white/10 hover:bg-white/20 p-2 px-4 rounded-md border border-white/10 text-xs font-bold transition-all duration-300 w-24">
                             نسخ
                         </button>
@@ -128,53 +130,68 @@
                     </div>
                 </div>
 
-                <!-- بطاقة Eniac Network Testnet -->
-                <div class="bg-black/40 border border-white/5 rounded-lg p-4 flex flex-col md:flex-row justify-between items-center gap-4 hover:border-neonPurple/50 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">E</div>
-                        <div>
-                            <h4 class="font-bold text-lg flex items-center gap-2">Eniac Network <span class="text-xs bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded border border-yellow-500/30">Testnet</span></h4>
-                            <p class="text-gray-400 text-sm">RPC URL</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 w-full md:w-auto">
-                        <code class="bg-black text-neonPurple px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">https://testnet.corenode.io/v1/eniac/your-api-key</code>
-                        <button onclick="copyRPC(this)" class="bg-white/10 hover:bg-white/20 p-2 px-4 rounded-md border border-white/10 text-xs font-bold transition-all duration-300 w-24">
-                            نسخ
-                        </button>
-                    </div>
-                    <div class="flex items-center gap-2 min-w-[80px] justify-end">
-                        <span class="status-dot"></span>
-                        <span class="text-sm font-bold text-green-400">متصل</span>
-                    </div>
-                </div>
             </div>
         </div>
     </main>
 
-    <!-- كود الجافاسكربت لتفعيل النسخ -->
+    <!-- أكواد الجافاسكربت للتفاعل -->
     <script>
+        // دالة نسخ الرابط
         function copyRPC(button) {
-            // الوصول إلى الكود الموجود بجانب الزر
             const codeBlock = button.previousElementSibling;
             const textToCopy = codeBlock.innerText;
 
-            // استخدام واجهة الحافظة (Clipboard API) لنسخ النص
             navigator.clipboard.writeText(textToCopy).then(() => {
-                // تغيير شكل الزر مؤقتاً ليعطي تأكيداً مرئياً
                 const originalText = button.innerText;
                 button.innerText = 'تم النسخ! ✓';
                 button.classList.add('bg-green-500/20', 'text-green-400', 'border-green-500/50');
                 
-                // إعادة الزر لشكله الطبيعي بعد ثانيتين
                 setTimeout(() => {
                     button.innerText = originalText;
                     button.classList.remove('bg-green-500/20', 'text-green-400', 'border-green-500/50');
                 }, 2000);
             }).catch(err => {
                 console.error('فشل النسخ: ', err);
-                button.innerText = 'خطأ!';
             });
+        }
+
+        // دالة توليد مفتاح ورابط جديد
+        function generateNewRPC() {
+            // توليد سلسلة حروف وأرقام عشوائية كمفتاح API
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let newApiKey = '';
+            for (let i = 0; i < 12; i++) {
+                newApiKey += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            const newRpcUrl = `https://mainnet.corenode.io/v1/custom/${newApiKey}`;
+
+            // قالب البطاقة الجديدة
+            const newCardHTML = `
+                <div class="bg-black/40 border border-neonPurple/40 rounded-lg p-4 flex flex-col md:flex-row justify-between items-center gap-4 hover:border-neonPurple transition-colors shadow-[0_0_15px_rgba(157,0,255,0.1)]">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-neonPurple/20 text-neonPurple rounded-full flex items-center justify-center font-bold">C</div>
+                        <div>
+                            <h4 class="font-bold text-lg flex items-center gap-2">Custom Node <span class="text-xs bg-neonPurple/20 text-neonPurple px-2 py-0.5 rounded border border-neonPurple/30">جديد</span></h4>
+                            <p class="text-gray-400 text-sm">RPC URL</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <code class="bg-black text-neonPurple px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">${newRpcUrl}</code>
+                        <button onclick="copyRPC(this)" class="bg-white/10 hover:bg-white/20 p-2 px-4 rounded-md border border-white/10 text-xs font-bold transition-all duration-300 w-24">
+                            نسخ
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-2 min-w-[80px] justify-end">
+                        <span class="status-dot"></span>
+                        <span class="text-sm font-bold text-green-400">متصل</span>
+                    </div>
+                </div>
+            `;
+
+            // إضافة البطاقة الجديدة إلى أعلى القائمة
+            const rpcList = document.getElementById('rpc-list');
+            rpcList.insertAdjacentHTML('afterbegin', newCardHTML);
         }
     </script>
 </body>
