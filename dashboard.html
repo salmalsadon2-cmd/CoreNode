@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم | CoreNode</title>
     
-    <!-- خط Cairo -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -70,7 +67,7 @@
     <!-- شريط التنقل العلوي -->
     <nav class="glass-panel mx-4 mt-4 px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-sm">C</div>
+            <a href="index.html" class="w-8 h-8 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-sm hover:scale-110 transition-transform">C</a>
             <span class="text-xl font-bold">لوحة المطورين</span>
         </div>
         <div class="flex items-center gap-4">
@@ -104,7 +101,7 @@
         <div class="glass-panel p-6">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                 <h2 class="text-2xl font-bold">روابط الـ RPC النشطة الخاصة بك</h2>
-                <button class="bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-2 px-6 rounded-lg text-sm hover:scale-105 transition-transform">
+                <button class="bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-2 px-6 rounded-lg text-sm hover:scale-105 transition-transform cursor-not-allowed opacity-80" title="سيتم التفعيل قريباً">
                     + توليد رابط RPC جديد
                 </button>
             </div>
@@ -120,14 +117,12 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-3 w-full md:w-auto">
-                        <code class="bg-black text-neonBlue px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">
-                            https://mainnet.corenode.io/v1/eniac/...
-                        </code>
-                        <button class="bg-white/10 hover:bg-white/20 p-2 rounded-md border border-white/10 text-xs font-bold transition-colors">
+                        <code class="bg-black text-neonBlue px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">https://mainnet.corenode.io/v1/eniac/your-api-key</code>
+                        <button onclick="copyRPC(this)" class="bg-white/10 hover:bg-white/20 p-2 px-4 rounded-md border border-white/10 text-xs font-bold transition-all duration-300 w-24">
                             نسخ
                         </button>
                     </div>
-                    <div class="flex items-center gap-2 min-w-[80px]">
+                    <div class="flex items-center gap-2 min-w-[80px] justify-end">
                         <span class="status-dot"></span>
                         <span class="text-sm font-bold text-green-400">متصل</span>
                     </div>
@@ -143,21 +138,44 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-3 w-full md:w-auto">
-                        <code class="bg-black text-neonPurple px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">
-                            https://testnet.corenode.io/v1/eniac/...
-                        </code>
-                        <button class="bg-white/10 hover:bg-white/20 p-2 rounded-md border border-white/10 text-xs font-bold transition-colors">
+                        <code class="bg-black text-neonPurple px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">https://testnet.corenode.io/v1/eniac/your-api-key</code>
+                        <button onclick="copyRPC(this)" class="bg-white/10 hover:bg-white/20 p-2 px-4 rounded-md border border-white/10 text-xs font-bold transition-all duration-300 w-24">
                             نسخ
                         </button>
                     </div>
-                    <div class="flex items-center gap-2 min-w-[80px]">
+                    <div class="flex items-center gap-2 min-w-[80px] justify-end">
                         <span class="status-dot"></span>
                         <span class="text-sm font-bold text-green-400">متصل</span>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
+
+    <!-- كود الجافاسكربت لتفعيل النسخ -->
+    <script>
+        function copyRPC(button) {
+            // الوصول إلى الكود الموجود بجانب الزر
+            const codeBlock = button.previousElementSibling;
+            const textToCopy = codeBlock.innerText;
+
+            // استخدام واجهة الحافظة (Clipboard API) لنسخ النص
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // تغيير شكل الزر مؤقتاً ليعطي تأكيداً مرئياً
+                const originalText = button.innerText;
+                button.innerText = 'تم النسخ! ✓';
+                button.classList.add('bg-green-500/20', 'text-green-400', 'border-green-500/50');
+                
+                // إعادة الزر لشكله الطبيعي بعد ثانيتين
+                setTimeout(() => {
+                    button.innerText = originalText;
+                    button.classList.remove('bg-green-500/20', 'text-green-400', 'border-green-500/50');
+                }, 2000);
+            }).catch(err => {
+                console.error('فشل النسخ: ', err);
+                button.innerText = 'خطأ!';
+            });
+        }
+    </script>
 </body>
 </html>
