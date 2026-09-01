@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستكشف الكتل | CoreNode</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+                    colors: { neonBlue: '#00f3ff', neonPurple: '#9d00ff', darkBg: '#05050a' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #05050a; color: #ffffff; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
+        .bg-grid { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-size: 40px 40px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px); z-index: -2; }
+        .glass-card { background: rgba(15, 15, 20, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1rem; }
+        .text-gradient { background: linear-gradient(90deg, #00f3ff, #9d00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="antialiased min-h-screen relative pb-20">
+    <div class="bg-grid"></div>
+
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+        <a href="index.html" class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-lg">C</div>
+            <span class="text-2xl font-black tracking-wider">CoreNode</span>
+        </a>
+        <div class="flex items-center gap-4">
+            <span class="text-sm font-bold text-green-400 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> Eniac Mainnet</span>
+            <a href="index.html" class="text-sm text-gray-400 hover:text-white font-bold">الرئيسية</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 mt-8 max-w-6xl relative z-10">
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-black mb-2">مستكشف الشبكة <span class="text-gradient">(Explorer)</span></h1>
+            <p class="text-gray-400">مراقبة حية للكتل والمعاملات عبر شبكة Eniac الموجهة بواسطة CoreNode</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-center">
+            <div class="glass-card p-6"><h3 class="text-gray-400 text-sm mb-1">سرعة المعاملات (TPS)</h3><p class="text-3xl font-black text-neonBlue" id="tps">4,251</p></div>
+            <div class="glass-card p-6"><h3 class="text-gray-400 text-sm mb-1">أحدث كتلة (Latest Block)</h3><p class="text-3xl font-black text-white" id="latest-block">18,542,901</p></div>
+            <div class="glass-card p-6"><h3 class="text-gray-400 text-sm mb-1">زمن الاستجابة (Latency)</h3><p class="text-3xl font-black text-neonPurple" id="latency">12 ms</p></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="glass-card p-6">
+                <h3 class="text-xl font-bold mb-4 border-b border-white/10 pb-2">📦 أحدث الكتل</h3>
+                <div id="blocks-container" class="space-y-4"></div>
+            </div>
+            <div class="glass-card p-6">
+                <h3 class="text-xl font-bold mb-4 border-b border-white/10 pb-2">💸 أحدث المعاملات</h3>
+                <div id="tx-container" class="space-y-4"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentBlock = 18542901;
+        function generateHash() { return '0x' + Array.from({length: 16}, () => Math.floor(Math.random()*16).toString(16)).join(''); }
+        
+        function updateExplorer() {
+            currentBlock++;
+            document.getElementById('latest-block').innerText = currentBlock.toLocaleString();
+            document.getElementById('tps').innerText = (Math.floor(Math.random() * 500) + 4000).toLocaleString();
+            document.getElementById('latency').innerText = (Math.floor(Math.random() * 5) + 10) + ' ms';
+
+            const blocksContainer = document.getElementById('blocks-container');
+            const newBlock = document.createElement('div');
+            newBlock.className = 'flex justify-between items-center bg-white/5 p-3 rounded-lg fade-in text-sm';
+            newBlock.innerHTML = `<div><span class="text-neonBlue font-bold">#${currentBlock}</span><p class="text-gray-500 text-xs">${Math.floor(Math.random()*50)+10} txns</p></div><div class="text-left"><p class="text-gray-300 font-mono">${generateHash().substring(0, 10)}...</p><p class="text-xs text-gray-500">منذ ثانية واحدة</p></div>`;
+            blocksContainer.prepend(newBlock);
+            if (blocksContainer.children.length > 5) blocksContainer.lastChild.remove();
+
+            const txContainer = document.getElementById('tx-container');
+            const newTx = document.createElement('div');
+            newTx.className = 'flex justify-between items-center bg-white/5 p-3 rounded-lg fade-in text-sm';
+            newTx.innerHTML = `<div><span class="text-neonPurple font-mono">${generateHash().substring(0, 10)}</span><p class="text-gray-500 text-xs">إلى: ${generateHash().substring(0, 8)}...</p></div><div class="font-bold">${(Math.random() * 100).toFixed(2)} CNDE</div>`;
+            txContainer.prepend(newTx);
+            if (txContainer.children.length > 5) txContainer.lastChild.remove();
+        }
+        
+        for(let i=0; i<5; i++) updateExplorer(); // Initial population
+        setInterval(updateExplorer, 3500); // Update every 3.5 seconds
+    </script>
+</body>
+</html>
