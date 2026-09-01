@@ -48,6 +48,11 @@
         .glass-card:hover { border-color: rgba(0, 243, 255, 0.4); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1); }
         .text-gradient { background: linear-gradient(90deg, #00f3ff, #9d00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .timeline-border { border-left: 2px dashed rgba(157, 0, 255, 0.5); }
+        
+        /* Range Slider Styles */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; height: 20px; width: 20px; border-radius: 50%; background: #00f3ff; cursor: pointer; margin-top: -8px; box-shadow: 0 0 10px #00f3ff; }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 3px; }
     </style>
 </head>
 <body class="antialiased relative min-h-screen">
@@ -162,6 +167,36 @@
         </div>
     </section>
 
+    <!-- Staking Calculator -->
+    <section class="container mx-auto px-6 py-20 relative z-10">
+        <div class="max-w-4xl mx-auto glass-card p-8 md:p-12 border-neonBlue/30">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-black mb-2">Liquidity Yield Calculator <span class="text-gradient">(Staking)</span></h2>
+                <p class="text-gray-400 text-sm">Estimate your annual returns as a market maker or liquidity provider.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div>
+                        <div class="flex justify-between mb-2"><label class="font-bold text-sm">Staking Amount ($CNDE)</label><span id="amountVal" class="text-neonBlue font-bold">10,000</span></div>
+                        <input type="range" id="amountSlider" min="1000" max="500000" step="1000" value="10000" oninput="calculateROI()">
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2"><label class="font-bold text-sm">Duration (Months)</label><span id="durationVal" class="text-neonPurple font-bold">6 Months</span></div>
+                        <input type="range" id="durationSlider" min="1" max="24" step="1" value="6" oninput="calculateROI()">
+                    </div>
+                </div>
+                
+                <div class="bg-black/50 p-6 rounded-2xl border border-white/10 text-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-neonPurple/10 to-transparent pointer-events-none"></div>
+                    <p class="text-gray-400 text-sm mb-2">Estimated Yield</p>
+                    <p class="text-5xl font-black text-white mb-2" id="rewardAmount">1,250 <span class="text-xl text-gray-500">CNDE</span></p>
+                    <div class="inline-block px-3 py-1 rounded bg-green-500/20 text-green-400 text-xs font-bold mt-2" id="apyTag">APY: 25%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Roadmap -->
     <section id="roadmap" class="container mx-auto px-6 py-20 border-t border-white/5 relative z-10">
         <div class="text-center mb-16">
@@ -182,7 +217,7 @@
             <div class="relative">
                 <span class="absolute -left-[41px] top-1 w-5 h-5 border-2 border-gray-500 rounded-full bg-darkBg"></span>
                 <h3 class="text-2xl font-bold text-white mb-2">Phase 3: Institutional Expansion</h3>
-                <p class="text-gray-400">Expand KOL marketing campaigns and initiate listing procedures on centralized exchanges (BingX, KuCoin, CoinEx).</p>
+                <p class="text-gray-400">Expand KOL marketing campaigns and initiate listing procedures on centralized exchanges (BingX, KuCoin).</p>
             </div>
         </div>
     </section>
@@ -205,5 +240,22 @@
         </div>
     </footer>
 
-</body>/
+    <script>
+        function calculateROI() {
+            const amount = parseInt(document.getElementById('amountSlider').value);
+            const duration = parseInt(document.getElementById('durationSlider').value);
+            document.getElementById('amountVal').innerText = amount.toLocaleString();
+            document.getElementById('durationVal').innerText = duration + ' Months';
+            
+            let apy = 12 + (duration * 0.5); 
+            if (apy > 35) apy = 35; 
+            
+            const reward = (amount * (apy / 100)) * (duration / 12);
+            
+            document.getElementById('rewardAmount').innerHTML = Math.floor(reward).toLocaleString() + ' <span class="text-xl text-gray-500">CNDE</span>';
+            document.getElementById('apyTag').innerText = `APY: ${apy.toFixed(1)}%`;
+        }
+        calculateROI(); 
+    </script>
+</body>
 </html>
