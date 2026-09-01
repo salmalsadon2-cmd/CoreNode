@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>运行节点 | CoreNode</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { inter: ['Inter', 'Microsoft YaHei', 'sans-serif'] },
+                    colors: {
+                        neonBlue: '#00f3ff',
+                        neonPurple: '#9d00ff',
+                        darkBg: '#05050a',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #05050a;
+            color: #ffffff;
+            overflow-x: hidden;
+            font-family: 'Inter', 'Microsoft YaHei', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .bg-grid {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            z-index: -2;
+        }
+        .node-orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: -1; animation: pulse 8s infinite alternate ease-in-out; }
+        .orb-1 { top: -10%; right: 10%; width: 350px; height: 350px; background: rgba(0, 243, 255, 0.15); }
+        .orb-2 { bottom: -10%; left: 10%; width: 450px; height: 450px; background: rgba(157, 0, 255, 0.15); }
+        @keyframes pulse { 0% { transform: scale(1) translateY(0); opacity: 0.8; } 100% { transform: scale(1.1) translateY(30px); opacity: 1; } }
+        .glass-card {
+            background: rgba(15, 15, 20, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; transition: all 0.3s ease;
+        }
+        .text-gradient { background: linear-gradient(90deg, #00f3ff, #9d00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="antialiased relative min-h-screen pb-20">
+
+    <div class="bg-grid"></div>
+    <div class="node-orb orb-1"></div>
+    <div class="node-orb orb-2"></div>
+
+    <!-- Navbar -->
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+        <a href="index-zh.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-lg shadow-[0_0_15px_rgba(0,243,255,0.5)]">C</div>
+            <span class="text-2xl font-black tracking-wider hidden md:block">CoreNode</span>
+        </a>
+        <div class="flex items-center gap-4">
+            <a href="index-zh.html" class="text-sm text-gray-400 hover:text-white font-bold transition-colors">返回首页</a>
+            <a href="dashboard.html" class="glass-card px-5 py-2 text-sm font-bold hover:bg-white/5 transition-colors border-white/20">
+                开发者门户
+            </a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 mt-8 max-w-5xl relative z-10">
+        
+        <!-- Header -->
+        <div class="text-center mb-16 mt-8">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-neonBlue/30 bg-neonBlue/10 text-neonBlue text-sm font-semibold">
+                🌐 成为基础设施的一部分
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                运行节点<br> 
+                并赚取 <span class="text-gradient">$CNDE</span> 奖励
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                通过提供您的服务器资源，帮助去中心化 Web3 网络（如 Eniac Network），并通过保障服务质量赚取持续收益。
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Technical Requirements -->
+            <div class="space-y-6">
+                <div class="glass-card p-8 border-l-4 border-l-gray-500">
+                    <h3 class="text-xl font-black mb-4">最低配置要求 (测试网)</h3>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-center gap-2"><span>⚙️</span> <strong>处理器 (CPU):</strong> 4 Cores</li>
+                        <li class="flex items-center gap-2"><span>🧠</span> <strong>内存 (RAM):</strong> 8 GB</li>
+                        <li class="flex items-center gap-2"><span>💾</span> <strong>存储 (Storage):</strong> 500 GB SSD</li>
+                        <li class="flex items-center gap-2"><span>🌐</span> <strong>网络 (Network):</strong> 100 Mbps (稳定)</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card p-8 border-l-4 border-l-neonBlue">
+                    <h3 class="text-xl font-black mb-4 text-neonBlue">推荐配置要求 (主网)</h3>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-center gap-2"><span>⚙️</span> <strong>处理器 (CPU):</strong> 8 Cores (高性能)</li>
+                        <li class="flex items-center gap-2"><span>🧠</span> <strong>内存 (RAM):</strong> 16 GB 或更高</li>
+                        <li class="flex items-center gap-2"><span>🚀</span> <strong>存储 (Storage):</strong> 1 TB NVMe SSD</li>
+                        <li class="flex items-center gap-2"><span>🌐</span> <strong>网络 (Network):</strong> 1 Gbps (专用)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Waitlist Form -->
+            <div class="glass-card p-8">
+                <h3 class="text-2xl font-black mb-2">候补名单 (Waitlist)</h3>
+                <p class="text-sm text-gray-400 mb-6">该计划目前处于封闭测试阶段。提交您的详细信息，我们将很快与您联系。</p>
+                
+                <form onsubmit="event.preventDefault(); alert('您的请求已成功接收！我们将很快通过 Telegram 与您联系。');" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-300">姓名或昵称</label>
+                        <input type="text" required class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonPurple transition-colors" placeholder="例如: Satoshi">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-300">Telegram 账号</label>
+                        <input type="text" required class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonPurple transition-colors" placeholder="@username">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold mb-2 text-gray-300">您是否有运行节点的经验？</label>
+                        <select class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonPurple transition-colors appearance-none">
+                            <option>是的，我目前正在运行节点</option>
+                            <option>我有技术背景，但还没有运行过</option>
+                            <option>初学者，愿意学习</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity mt-4">
+                        加入候补名单
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>
