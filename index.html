@@ -148,6 +148,39 @@
             document.getElementById('apyTag').innerText = `نسبة العائد (APY): ${apy.toFixed(1)}%`;
         }
         calculateROI(); // Initial calc
-    </script>
+    </script>// 1. تحديد العناصر من صفحة HTML (يجب التأكد من إضافة هذه الـ IDs في كود HTML لديك)
+const amountSlider = document.getElementById('amount-slider');
+const amountDisplay = document.getElementById('amount-display'); // يعرض: 10,000
+const monthsSlider = document.getElementById('months-slider');
+const monthsDisplay = document.getElementById('months-display'); // يعرض: 6
+const yieldDisplay = document.getElementById('yield-display'); // يعرض: 750
+
+// نسبة العائد السنوي (APY)
+const APY_RATE = 0.15; // 15.0%
+
+// 2. دالة حساب العائد وتحديث الواجهة
+function calculateYield() {
+    // جلب القيم الحالية من أشرطة التمرير
+    const amount = parseFloat(amountSlider.value);
+    const months = parseFloat(monthsSlider.value);
+
+    // تحديث الأرقام النصية المعروضة بجانب أشرطة التمرير
+    amountDisplay.innerText = amount.toLocaleString('en-US'); // تنسيق الرقم مع فواصل (مثال: 10,000)
+    monthsDisplay.innerText = months;
+
+    // حساب العائد التقريبي
+    const estimatedYield = amount * APY_RATE * (months / 12);
+
+    // تحديث النتيجة النهائية في الشاشة بدون فواصل عشرية
+    yieldDisplay.innerText = estimatedYield.toFixed(0); 
+}
+
+// 3. إضافة مستمعي الأحداث للتفاعل المباشر عند السحب (Input Event)
+amountSlider.addEventListener('input', calculateYield);
+monthsSlider.addEventListener('input', calculateYield);
+
+// 4. تشغيل الدالة مرة واحدة عند تحميل الصفحة لضبط القيم الافتراضية
+calculateYield();
+    
 </body>
 </html>
