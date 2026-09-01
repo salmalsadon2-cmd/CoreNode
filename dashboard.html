@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | CoreNode</title>
+    <title>لوحة المطورين | CoreNode</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,168 +30,215 @@
             overflow-x: hidden;
         }
         .bg-grid {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             z-index: -2;
         }
-        .glass-panel {
-            background: rgba(15, 15, 20, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1rem;
+        .glass-card {
+            background: rgba(15, 15, 20, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1rem;
         }
-        .status-dot {
-            height: 10px; width: 10px;
-            background-color: #10B981;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 10px #10B981;
-            animation: blink 2s infinite;
+        .text-gradient { background: linear-gradient(90deg, #00f3ff, #9d00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* تأثيرات النافذة المنبثقة */
+        #walletModal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+        .modal-content {
+            transform: scale(0.95); transition: transform 0.3s ease;
         }
+        #walletModal.active { opacity: 1; visibility: visible; }
+        #walletModal.active .modal-content { transform: scale(1); }
     </style>
 </head>
 <body class="antialiased min-h-screen relative">
 
     <div class="bg-grid"></div>
 
-    <!-- شريط التنقل العلوي -->
-    <nav class="glass-panel mx-4 mt-4 px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <a href="index.html" class="w-8 h-8 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-sm hover:scale-110 transition-transform">C</a>
-            <span class="text-xl font-bold">لوحة المطورين</span>
+    <!-- نافذة ربط المحفظة (Web3 Modal) -->
+    <div id="walletModal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center backdrop-blur-sm opacity-0 invisible">
+        <div class="glass-card p-6 w-11/12 max-w-md relative modal-content border-neonPurple/40">
+            <button onclick="closeModal()" class="absolute top-4 left-4 text-gray-400 hover:text-white text-2xl font-bold">&times;</button>
+            <h3 class="text-2xl font-black mb-2 text-center">ربط المحفظة</h3>
+            <p class="text-sm text-gray-400 text-center mb-6">يرجى اختيار مزود المحفظة للوصول إلى لوحة التحكم.</p>
+            
+            <div class="space-y-4">
+                <button onclick="simulateConnect('MetaMask')" class="w-full flex items-center justify-between glass-card p-4 hover:border-orange-500 transition-colors cursor-pointer group">
+                    <span class="font-bold group-hover:text-orange-500 transition-colors">MetaMask</span>
+                    <span class="text-3xl">🦊</span>
+                </button>
+                <button onclick="simulateConnect('Trust Wallet')" class="w-full flex items-center justify-between glass-card p-4 hover:border-blue-500 transition-colors cursor-pointer group">
+                    <span class="font-bold group-hover:text-blue-500 transition-colors">Trust Wallet</span>
+                    <span class="text-3xl">🛡️</span>
+                </button>
+                <button onclick="simulateConnect('WalletConnect')" class="w-full flex items-center justify-between glass-card p-4 hover:border-cyan-500 transition-colors cursor-pointer group">
+                    <span class="font-bold group-hover:text-cyan-500 transition-colors">WalletConnect</span>
+                    <span class="text-3xl">🔗</span>
+                </button>
+            </div>
         </div>
+    </div>
+
+    <!-- شريط التنقل -->
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-lg">C</div>
+            <span class="text-2xl font-black tracking-wider hidden md:block">CoreNode</span>
+        </a>
+        
         <div class="flex items-center gap-4">
-            <span class="text-sm text-gray-400">محفظتك متصلة: 0x4F...a9B</span>
-            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">👤</div>
+            <a href="index.html" class="text-sm text-gray-400 hover:text-white font-bold">الرئيسية</a>
+            <!-- زر ربط المحفظة الأساسي -->
+            <button id="connectBtn" onclick="openModal()" class="glass-card px-5 py-2 text-sm font-bold text-white hover:border-neonBlue transition-colors flex items-center gap-2 border-white/20">
+                <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse" id="statusDot"></span>
+                <span id="connectText">ربط المحفظة</span>
+            </button>
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-8">
+    <!-- محتوى لوحة التحكم -->
+    <main class="container mx-auto px-4 mt-8 max-w-5xl relative z-10 mb-20">
         
-        <!-- قسم الإحصائيات -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="glass-panel p-6">
-                <p class="text-gray-400 text-sm mb-2">الطلبات الإجمالية (24 ساعة)</p>
-                <h3 class="text-3xl font-black text-white">1.2M</h3>
-                <p class="text-neonBlue text-xs mt-2">↑ 12% نمو</p>
-            </div>
-            <div class="glass-panel p-6">
-                <p class="text-gray-400 text-sm mb-2">وقت التشغيل (Uptime)</p>
-                <h3 class="text-3xl font-black text-green-400">99.99%</h3>
-                <p class="text-gray-400 text-xs mt-2">الشبكة مستقرة بالكامل</p>
-            </div>
-            <div class="glass-panel p-6">
-                <p class="text-gray-400 text-sm mb-2">متوسط زمن الاستجابة (Latency)</p>
-                <h3 class="text-3xl font-black text-white">24<span class="text-lg">ms</span></h3>
-                <p class="text-neonBlue text-xs mt-2">توجيه ذكي مفعل</p>
-            </div>
-        </div>
-
-        <!-- قسم عقد الاتصال (RPC Endpoints) -->
-        <div class="glass-panel p-6">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                <h2 class="text-2xl font-bold">روابط الـ RPC النشطة الخاصة بك</h2>
-                <button onclick="generateNewRPC()" class="bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-2 px-6 rounded-lg text-sm hover:scale-105 transition-transform shadow-[0_0_15px_rgba(157,0,255,0.4)]">
-                    + توليد رابط RPC جديد
-                </button>
-            </div>
-
-            <!-- حاوية الروابط -->
-            <div class="space-y-4" id="rpc-list">
-                
-                <!-- بطاقة Eniac Network Mainnet الأساسية -->
-                <div class="bg-black/40 border border-white/5 rounded-lg p-4 flex flex-col md:flex-row justify-between items-center gap-4 hover:border-neonBlue/50 transition-colors">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center font-bold">E</div>
-                        <div>
-                            <h4 class="font-bold text-lg flex items-center gap-2">Eniac Network <span class="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded border border-green-500/30">Mainnet</span></h4>
-                            <p class="text-gray-400 text-sm">RPC URL</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- الشريط الجانبي (الإحصائيات) -->
+            <div class="glass-card p-6 md:col-span-1 h-fit">
+                <h3 class="font-black text-xl mb-4 border-b border-white/10 pb-2">نظرة عامة</h3>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-gray-400">الباقة الحالية</p>
+                        <p class="font-bold text-neonBlue">الطبقة المجانية (Free Tier)</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">استهلاك الطلبات (هذا الشهر)</p>
+                        <div class="w-full bg-white/5 rounded-full h-2 mt-2">
+                            <div class="bg-gradient-to-r from-neonPurple to-neonBlue h-2 rounded-full" style="width: 45%"></div>
                         </div>
+                        <p class="text-xs text-gray-400 mt-1 text-left">4,500 / 10,000</p>
                     </div>
-                    <div class="flex items-center gap-3 w-full md:w-auto">
-                        <code class="bg-black text-neonBlue px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">https://mainnet.corenode.io/v1/eniac/a1b2c3d4e5</code>
-                        <button onclick="copyRPC(this)" class="bg-white/10 hover:bg-white/20 p-2 px-4 rounded-md border border-white/10 text-xs font-bold transition-all duration-300 w-24">
-                            نسخ
-                        </button>
-                    </div>
-                    <div class="flex items-center gap-2 min-w-[80px] justify-end">
-                        <span class="status-dot"></span>
-                        <span class="text-sm font-bold text-green-400">متصل</span>
+                    <div>
+                        <p class="text-sm text-gray-400">حالة الشبكة (Eniac)</p>
+                        <p class="font-bold text-green-400 flex items-center gap-1">
+                            <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                            مستقرة (99.9%)
+                        </p>
                     </div>
                 </div>
+            </div>
 
+            <!-- لوحة توليد المفاتيح -->
+            <div class="glass-card p-8 md:col-span-2">
+                <h2 class="text-3xl font-black mb-2">نقاط الاتصال <span class="text-gradient">(RPC Endpoints)</span></h2>
+                <p class="text-gray-400 text-sm mb-8">قم بتوليد مفاتيح API الخاصة بك للاتصال بالشبكات المدعومة بأمان وبدون قيود.</p>
+
+                <div class="space-y-6">
+                    <!-- اختيار الشبكة -->
+                    <div>
+                        <label class="block text-sm font-bold mb-2">اختر الشبكة (Network)</label>
+                        <select id="networkSelect" class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonBlue transition-colors appearance-none">
+                            <option value="eniac-mainnet">Eniac Mainnet</option>
+                            <option value="eniac-testnet">Eniac Testnet</option>
+                        </select>
+                    </div>
+
+                    <!-- زر التوليد -->
+                    <button onclick="generateRPC()" class="bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-3 px-6 rounded-lg w-full hover:opacity-90 transition-opacity">
+                        توليد رابط RPC جديد
+                    </button>
+
+                    <!-- النتيجة -->
+                    <div id="resultBox" class="hidden mt-6">
+                        <label class="block text-sm font-bold mb-2 text-neonBlue">الرابط الخاص بك (لا تشاركه مع أحد):</label>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="rpcUrl" readonly class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-gray-300 outline-none font-mono text-sm" value="">
+                            <button onclick="copyRPC()" class="glass-card p-3 hover:bg-white/10 transition-colors" title="نسخ الرابط">
+                                📋
+                            </button>
+                        </div>
+                        <p id="copyMsg" class="text-green-400 text-xs mt-2 hidden">تم النسخ إلى الحافظة بنجاح!</p>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- أكواد الجافاسكربت للتفاعل -->
+    <!-- سكربتات التفاعل (جافا سكربت) -->
     <script>
-        // دالة نسخ الرابط
-        function copyRPC(button) {
-            const codeBlock = button.previousElementSibling;
-            const textToCopy = codeBlock.innerText;
+        // دوال النافذة المنبثقة
+        const modal = document.getElementById('walletModal');
+        const connectBtn = document.getElementById('connectBtn');
+        const connectText = document.getElementById('connectText');
+        const statusDot = document.getElementById('statusDot');
+        
+        let isConnected = false;
 
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = button.innerText;
-                button.innerText = 'تم النسخ! ✓';
-                button.classList.add('bg-green-500/20', 'text-green-400', 'border-green-500/50');
-                
-                setTimeout(() => {
-                    button.innerText = originalText;
-                    button.classList.remove('bg-green-500/20', 'text-green-400', 'border-green-500/50');
-                }, 2000);
-            }).catch(err => {
-                console.error('فشل النسخ: ', err);
-            });
+        function openModal() {
+            if(!isConnected) {
+                modal.classList.add('active');
+            } else {
+                // إذا كان متصلاً، اضغط لفصل المحفظة
+                isConnected = false;
+                connectText.innerText = "ربط المحفظة";
+                connectBtn.classList.remove('border-green-500');
+                statusDot.classList.remove('bg-green-500');
+                statusDot.classList.add('bg-red-500');
+            }
         }
 
-        // دالة توليد مفتاح ورابط جديد
-        function generateNewRPC() {
-            // توليد سلسلة حروف وأرقام عشوائية كمفتاح API
-            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-            let newApiKey = '';
-            for (let i = 0; i < 12; i++) {
-                newApiKey += chars.charAt(Math.floor(Math.random() * chars.length));
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        function simulateConnect(walletName) {
+            // محاكاة تحميل بسيط
+            connectText.innerText = "جاري الاتصال...";
+            closeModal();
+            
+            setTimeout(() => {
+                isConnected = true;
+                // إظهار عنوان محفظة وهمي ليعطي واقعية
+                connectText.innerText = "0x7F...3bA";
+                connectBtn.classList.add('border-green-500');
+                statusDot.classList.remove('bg-red-500');
+                statusDot.classList.add('bg-green-500');
+            }, 800);
+        }
+
+        // دوال توليد الـ RPC
+        function generateRPC() {
+            if(!isConnected) {
+                alert("يرجى ربط المحفظة أولاً لتوليد مفتاح API.");
+                openModal();
+                return;
             }
 
-            const newRpcUrl = `https://mainnet.corenode.io/v1/custom/${newApiKey}`;
+            const network = document.getElementById('networkSelect').value;
+            const rpcInput = document.getElementById('rpcUrl');
+            const resultBox = document.getElementById('resultBox');
+            
+            // توليد كود عشوائي للمفتاح
+            const randomKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            
+            if(network === 'eniac-mainnet') {
+                rpcInput.value = `https://mainnet.corenode.io/v1/${randomKey}`;
+            } else {
+                rpcInput.value = `https://testnet.corenode.io/v1/${randomKey}`;
+            }
+            
+            resultBox.classList.remove('hidden');
+        }
 
-            // قالب البطاقة الجديدة
-            const newCardHTML = `
-                <div class="bg-black/40 border border-neonPurple/40 rounded-lg p-4 flex flex-col md:flex-row justify-between items-center gap-4 hover:border-neonPurple transition-colors shadow-[0_0_15px_rgba(157,0,255,0.1)]">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-neonPurple/20 text-neonPurple rounded-full flex items-center justify-center font-bold">C</div>
-                        <div>
-                            <h4 class="font-bold text-lg flex items-center gap-2">Custom Node <span class="text-xs bg-neonPurple/20 text-neonPurple px-2 py-0.5 rounded border border-neonPurple/30">جديد</span></h4>
-                            <p class="text-gray-400 text-sm">RPC URL</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 w-full md:w-auto">
-                        <code class="bg-black text-neonPurple px-4 py-2 rounded-md text-sm border border-white/10 flex-1 md:w-80 truncate text-left" dir="ltr">${newRpcUrl}</code>
-                        <button onclick="copyRPC(this)" class="bg-white/10 hover:bg-white/20 p-2 px-4 rounded-md border border-white/10 text-xs font-bold transition-all duration-300 w-24">
-                            نسخ
-                        </button>
-                    </div>
-                    <div class="flex items-center gap-2 min-w-[80px] justify-end">
-                        <span class="status-dot"></span>
-                        <span class="text-sm font-bold text-green-400">متصل</span>
-                    </div>
-                </div>
-            `;
-
-            // إضافة البطاقة الجديدة إلى أعلى القائمة
-            const rpcList = document.getElementById('rpc-list');
-            rpcList.insertAdjacentHTML('afterbegin', newCardHTML);
+        function copyRPC() {
+            const rpcInput = document.getElementById('rpcUrl');
+            rpcInput.select();
+            document.execCommand("copy");
+            
+            const copyMsg = document.getElementById('copyMsg');
+            copyMsg.classList.remove('hidden');
+            setTimeout(() => {
+                copyMsg.classList.add('hidden');
+            }, 2000);
         }
     </script>
 </body>
