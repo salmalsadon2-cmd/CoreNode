@@ -56,6 +56,7 @@
     <div class="node-orb orb-1"></div>
     <div class="node-orb orb-2"></div>
 
+    <!-- Navbar -->
     <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10">
         <div class="flex items-center gap-2">
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-lg shadow-[0_0_15px_rgba(0,243,255,0.5)]">C</div>
@@ -66,11 +67,16 @@
             <a href="#networks" class="hover:text-neonBlue transition">Networks</a>
             <a href="#tokenomics" class="hover:text-neonBlue transition">Tokenomics</a>
             <a href="#roadmap" class="hover:text-neonBlue transition">Roadmap</a>
-            <a href="index.html" class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition text-white">AR / العربية</a>
+            <!-- Language Switcher -->
+            <div class="flex gap-2">
+                <a href="index.html" class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition text-white">عربي</a>
+                <a href="index-zh.html" class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition text-white">中文</a>
+            </div>
         </div>
         <a href="dashboard.html" class="hidden md:block glass-card px-6 py-2 text-sm font-bold hover:bg-white/5">Dev Portal</a>
     </nav>
 
+    <!-- Hero Section -->
     <main class="container mx-auto px-6 pt-20 pb-20 text-center max-w-4xl relative z-10">
         <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-neonPurple/30 bg-neonPurple/10 text-neonPurple text-sm font-semibold">
             🚀 Next-Gen DePIN Infrastructure
@@ -89,15 +95,33 @@
             <a href="dashboard.html" class="bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-4 px-8 rounded-xl text-lg transition-transform hover:scale-105 shadow-[0_0_20px_rgba(157,0,255,0.4)]">
                 Start Building
             </a>
-            <a href="whitepaper.html" class="glass-card text-white font-bold py-4 px-8 rounded-xl text-lg flex items-center justify-center">
+            <a href="whitepaper-en.html" class="glass-card text-white font-bold py-4 px-8 rounded-xl text-lg flex items-center justify-center">
                 Read Whitepaper
             </a>
-            <a href="index.html" class="md:hidden glass-card text-white font-bold py-3 px-8 rounded-xl text-md flex items-center justify-center">
-                🌐 Switch to Arabic
-            </a>
+        </div>
+
+        <!-- Mobile Language Switcher -->
+        <div class="mt-6 md:hidden flex flex-wrap justify-center gap-2">
+            <a href="index.html" class="glass-card px-6 py-3 text-sm font-bold text-white border border-white/10 rounded-xl">عربي</a>
+            <a href="index-zh.html" class="glass-card px-6 py-3 text-sm font-bold text-white border border-white/10 rounded-xl">中文</a>
         </div>
     </main>
 
+    <!-- Ecosystem Partners -->
+    <section class="py-10 border-y border-white/5 bg-black/40 relative z-10 mb-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm text-gray-500 font-bold mb-8 tracking-widest">Ecosystem Partners & Future Backers</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-14 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                <span class="text-2xl font-black text-blue-500">BingX</span>
+                <span class="text-2xl font-black text-green-500">MEXC</span>
+                <span class="text-2xl font-black text-cyan-400">Gate.io</span>
+                <span class="text-xl font-bold text-white border border-white/20 px-3 py-1 rounded">Echo Trade MM</span>
+                <span class="text-2xl font-black text-purple-500">Akarun</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supported Networks -->
     <section id="networks" class="py-12 border-y border-white/5 bg-black/20 backdrop-blur-sm relative z-10">
         <div class="container mx-auto px-6 text-center">
             <p class="text-sm text-gray-400 font-bold mb-6">Smart routing supported for top decentralized networks & protocols</p>
@@ -109,6 +133,7 @@
         </div>
     </section>
 
+    <!-- Tokenomics -->
     <section id="tokenomics" class="container mx-auto px-6 py-20 relative z-10">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-black mb-4">The Power of <span class="text-neonBlue">$CNDE</span></h2>
@@ -133,6 +158,7 @@
         </div>
     </section>
 
+    <!-- Roadmap -->
     <section id="roadmap" class="container mx-auto px-6 py-20 border-t border-white/5 relative z-10">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-black mb-4">Roadmap</h2>
@@ -157,6 +183,7 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer class="border-t border-white/10 bg-black/40 mt-10 relative z-10">
         <div class="container mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-2 opacity-80">
