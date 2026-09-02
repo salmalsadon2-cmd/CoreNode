@@ -256,6 +256,83 @@
             document.getElementById('apyTag').innerText = `APY: ${apy.toFixed(1)}%`;
         }
         calculateROI(); 
-    </script>
+    </script><!-- Tokenomics Section -->
+<section class="py-20 bg-[#05050a] text-white" id="tokenomics" style="font-family: 'Cairo', sans-serif;">
+  <div class="container mx-auto px-6">
+    
+    <!-- Section Title -->
+    <h2 class="text-4xl font-black mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#00f3ff] to-[#9d00ff]">
+      $CNDE Tokenomics
+    </h2>
+
+    <!-- Total Supply Info -->
+    <div class="mb-16 text-center">
+      <p class="text-gray-400 text-lg uppercase tracking-wider mb-2">Total Supply</p>
+      <p class="text-5xl font-black text-white tracking-widest drop-shadow-[0_0_15px_rgba(0,243,255,0.3)]">
+        1,000,000,000
+      </p>
+    </div>
+
+    <!-- Tokenomics Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card 1: DePIN Rewards -->
+      <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 backdrop-blur-md hover:border-[#00f3ff] hover:shadow-[0_0_20px_rgba(0,243,255,0.2)] transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">DePIN Rewards</h3>
+          <span class="text-[#00f3ff] font-black text-3xl">35%</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">Dynamic release for network stability and staking yields.</p>
+      </div>
+
+      <!-- Card 2: CEX/DEX -->
+      <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 backdrop-blur-md hover:border-[#9d00ff] hover:shadow-[0_0_20px_rgba(157,0,255,0.2)] transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">CEX / DEX</h3>
+          <span class="text-[#9d00ff] font-black text-3xl">20%</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">Reserved for exchange fees and liquidity pools.</p>
+      </div>
+
+      <!-- Card 3: Team & Advisors -->
+      <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 backdrop-blur-md hover:border-[#00f3ff] hover:shadow-[0_0_20px_rgba(0,243,255,0.2)] transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">Team & Advisors</h3>
+          <span class="text-[#00f3ff] font-black text-3xl">15%</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">1-year cliff, followed by 24 months linear vesting.</p>
+      </div>
+
+      <!-- Card 4: Market Making -->
+      <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 backdrop-blur-md hover:border-[#9d00ff] hover:shadow-[0_0_20px_rgba(157,0,255,0.2)] transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">Market Making</h3>
+          <span class="text-[#9d00ff] font-black text-3xl">10%</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">100% unlocked at TGE for active order book management.</p>
+      </div>
+
+      <!-- Card 5: Marketing -->
+      <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 backdrop-blur-md hover:border-[#00f3ff] hover:shadow-[0_0_20px_rgba(0,243,255,0.2)] transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">Marketing (KOLs)</h3>
+          <span class="text-[#00f3ff] font-black text-3xl">10%</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">10% at TGE, remainder streamed transparently via Sablier.</p>
+      </div>
+
+      <!-- Card 6: OTC -->
+      <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 backdrop-blur-md hover:border-[#9d00ff] hover:shadow-[0_0_20px_rgba(157,0,255,0.2)] transition-all duration-300">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">OTC / Private</h3>
+          <span class="text-[#9d00ff] font-black text-3xl">10%</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">3-month lock, OTC execution via AirSwap atomic swaps.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 </body>
 </html>
