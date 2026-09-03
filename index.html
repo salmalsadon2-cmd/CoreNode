@@ -54,91 +54,155 @@
     <div class="node-orb orb-1"></div>
     <div class="node-orb orb-2"></div>
 
-    <!-- Navbar -->
-    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+    <!-- Navbar (English Only) -->
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10 max-w-7xl">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-lg shadow-[0_0_15px_rgba(0,243,255,0.5)]">C</div>
             <span class="text-2xl font-black tracking-wider hidden md:block">CoreNode</span>
         </a>
-        <div class="flex items-center gap-4">
-            <a href="index.html" class="text-sm text-gray-400 hover:text-white font-bold transition-colors">Back to Home</a>
+        <div class="flex items-center gap-6">
+            <!-- Main Navigation Links -->
+            <a href="#networks" class="text-sm text-gray-400 hover:text-white font-bold transition-colors">Networks</a>
+            <a href="#tokenomics" class="text-sm text-gray-400 hover:text-white font-bold transition-colors">Tokenomics</a>
+            <a href="#roadmap" class="text-sm text-gray-400 hover:text-white font-bold transition-colors">Roadmap</a>
+            
+            <a href="node.html" class="text-sm font-bold text-neonPurple hover:text-white transition-colors">Run a Node</a>
             <a href="dashboard.html" class="glass-card px-5 py-2 text-sm font-bold hover:bg-white/5 transition-colors border-white/20">
                 Dev Portal
             </a>
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 mt-8 max-w-5xl relative z-10">
+    <!-- Main Content Sections -->
+    <main class="relative z-10">
         
-        <!-- Header -->
-        <div class="text-center mb-16 mt-8">
-            <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-neonBlue/30 bg-neonBlue/10 text-neonBlue text-sm font-semibold">
-                🌐 Be part of the infrastructure
+        <!-- Hero Section -->
+        <section class="min-h-screen flex flex-col items-center justify-center pt-20 pb-12">
+            <div class="mb-8 relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] blur-[60px] opacity-25 rounded-full"></div>
+                <img src="1.png" alt="CoreNode Logo" class="relative z-10 w-44 h-44 md:w-52 md:h-52 object-contain drop-shadow-[0_0_25px_rgba(157,0,255,0.4)]">
             </div>
-            <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
-                Run a Node<br> 
-                & Earn <span class="text-gradient">$CNDE</span> Rewards
-            </h1>
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
-                Help decentralize Web3 networks (like Eniac Network) by providing your server resources, and earn continuous yields for ensuring service quality.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             
-            <!-- Technical Requirements -->
-            <div class="space-y-6">
-                <div class="glass-card p-8 border-l-4 border-l-gray-500">
-                    <h3 class="text-xl font-black mb-4">Minimum Requirements (Testnet)</h3>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li class="flex items-center gap-2"><span>⚙️</span> <strong>CPU:</strong> 4 Cores</li>
-                        <li class="flex items-center gap-2"><span>🧠</span> <strong>RAM:</strong> 8 GB</li>
-                        <li class="flex items-center gap-2"><span>💾</span> <strong>Storage:</strong> 500 GB SSD</li>
-                        <li class="flex items-center gap-2"><span>🌐</span> <strong>Network:</strong> 100 Mbps (Stable)</li>
-                    </ul>
+            <div class="text-center max-w-4xl px-6">
+                <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-neonPurple/30 bg-neonPurple/10 text-neonPurple text-sm font-semibold">
+                    🚀 Next-Gen DePIN Infrastructure
                 </div>
-
-                <div class="glass-card p-8 border-l-4 border-l-neonBlue">
-                    <h3 class="text-xl font-black mb-4 text-neonBlue">Recommended Requirements (Mainnet)</h3>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li class="flex items-center gap-2"><span>⚙️</span> <strong>CPU:</strong> 8 Cores (High Performance)</li>
-                        <li class="flex items-center gap-2"><span>🧠</span> <strong>RAM:</strong> 16 GB or higher</li>
-                        <li class="flex items-center gap-2"><span>🚀</span> <strong>Storage:</strong> 1 TB NVMe SSD</li>
-                        <li class="flex items-center gap-2"><span>🌐</span> <strong>Network:</strong> 1 Gbps (Dedicated)</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Waitlist Form -->
-            <div class="glass-card p-8">
-                <h3 class="text-2xl font-black mb-2">Waitlist</h3>
-                <p class="text-sm text-gray-400 mb-6">The program is currently in closed beta. Submit your details and we will contact you soon.</p>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
+                    No more downtime.<br>
+                    Faster, smarter <span class="text-gradient">RPC Nodes</span>.
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto">
+                    We provide developers with high-performance, decentralized infrastructure. Connect your dApps to mainnets and testnets securely, rapidly, and with zero downtime.
+                </p>
                 
-                <form onsubmit="event.preventDefault(); alert('Your request has been received successfully! We will contact you via Telegram soon.');" class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-bold mb-2 text-gray-300">Name or Alias</label>
-                        <input type="text" required class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonPurple transition-colors" placeholder="e.g., Satoshi">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2 text-gray-300">Telegram Handle</label>
-                        <input type="text" required class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonPurple transition-colors" placeholder="@username">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2 text-gray-300">Do you have prior experience running nodes?</label>
-                        <select class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonPurple transition-colors appearance-none">
-                            <option>Yes, I currently run nodes</option>
-                            <option>I have technical knowledge but haven't run one yet</option>
-                            <option>Beginner willing to learn</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-neonPurple to-neonBlue text-white font-bold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity mt-4">
-                        Join Waitlist
-                    </button>
-                </form>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                    <a href="#" class="w-full sm:w-auto px-8 py-3.5 rounded-full font-bold bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] text-white text-center hover:shadow-[0_0_25px_rgba(0,243,255,0.5)] transition-all">Start Building</a>
+                    <a href="#" class="w-full sm:w-auto px-8 py-3.5 rounded-full font-bold border border-gray-700 hover:border-[#00f3ff] bg-gray-900/50 text-white text-center transition-all">Read Whitepaper</a>
+                </div>
             </div>
+        </section>
 
-        </div>
+        <!-- Partners Section -->
+        <section class="py-12 border-y border-gray-900/50 bg-black/20">
+            <div class="container mx-auto px-6 max-w-6xl text-center">
+                <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-8">Ecosystem Partners & Future Backers</p>
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70">
+                    <span class="text-xl font-bold font-sans">BingX</span>
+                    <span class="text-xl font-bold font-sans">MEXC</span>
+                    <span class="text-xl font-bold font-sans">Gate.io</span>
+                    <span class="text-xl font-bold font-sans">Echo Trade MM</span>
+                    <span class="text-xl font-bold font-sans">Akarun</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Networks / Routing Section -->
+        <section id="networks" class="py-16 text-center">
+            <p class="text-sm text-gray-400 mb-4">Smart routing supported for top decentralized networks & protocols</p>
+            <div class="flex flex-wrap justify-center gap-6 text-sm font-semibold">
+                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-neonBlue"></span> Eniac Mainnet</span>
+                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-500"></span> Eniac Testnet</span>
+                <span class="flex items-center gap-2 text-neonPurple">AirSwap OTC</span>
+            </div>
+        </section>
+
+        <!-- Tokenomics Section -->
+        <section id="tokenomics" class="py-24 relative">
+            <div class="container mx-auto px-6 max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-5xl font-black mb-4">The Power of <span class="text-gradient">$CNDE</span></h2>
+                    <p class="text-gray-400">The core engine of our decentralized infrastructure and market making economy</p>
+                </div>
+                
+                <!-- Use Case Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+                    <div class="glass-card p-8 text-center hover:border-neonBlue transition-all">
+                        <div class="text-4xl mb-4">⛽</div>
+                        <h3 class="text-xl font-bold text-neonBlue mb-3">Pay for Requests</h3>
+                        <p class="text-gray-400 text-sm">Use the token to pay for premium RPC link generation on high-traffic networks without rate limits.</p>
+                    </div>
+                    <div class="glass-card p-8 text-center hover:border-neonPurple transition-all">
+                        <div class="text-4xl mb-4">💧</div>
+                        <h3 class="text-xl font-bold text-neonPurple mb-3">Liquidity Provision</h3>
+                        <p class="text-gray-400 text-sm">Stake tokens to participate in liquidity pools, supporting network stability and earning platform yields.</p>
+                    </div>
+                    <div class="glass-card p-8 text-center hover:border-yellow-400 transition-all">
+                        <div class="text-4xl mb-4">⚡</div>
+                        <h3 class="text-xl font-bold text-yellow-400 mb-3">Whale Trades Priority</h3>
+                        <p class="text-gray-400 text-sm">Exclusive discounts when using execution algorithms (TWAP) and direct P2P protocols.</p>
+                    </div>
+                </div>
+
+                <!-- Distribution Grid -->
+                <div class="mb-14 text-center mt-12 border-t border-gray-900 pt-16">
+                    <h2 class="text-2xl md:text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#00f3ff] to-[#9d00ff]">Token Distribution</h2>
+                    <p class="text-gray-400 text-sm uppercase tracking-wider mb-1">Total Supply</p>
+                    <p class="text-3xl md:text-4xl font-black tracking-widest text-white">1,000,000,000</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#00f3ff] transition-all">
+                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">DePIN Rewards</h3><span class="text-[#00f3ff] font-black text-2xl">35%</span></div>
+                        <p class="text-gray-400 text-sm leading-relaxed">Dynamic emissions for network reliability and staking incentives.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#9d00ff] transition-all">
+                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">CEX / DEX Liquidity</h3><span class="text-[#9d00ff] font-black text-2xl">20%</span></div>
+                        <p class="text-gray-400 text-sm leading-relaxed">Allocated for trading liquidity pools and exchange listing fees.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#00f3ff] transition-all">
+                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">Team & Advisors</h3><span class="text-[#00f3ff] font-black text-2xl">15%</span></div>
+                        <p class="text-gray-400 text-sm leading-relaxed">12-month cliff followed by 24 months linear vesting schedule.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#9d00ff] transition-all">
+                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">Market Making (MM)</h3><span class="text-[#9d00ff] font-black text-2xl">10%</span></div>
+                        <p class="text-gray-400 text-sm leading-relaxed">100% unlocked at TGE for active order book stabilization.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#00f3ff] transition-all">
+                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">Marketing & KOLs</h3><span class="text-[#00f3ff] font-black text-2xl">10%</span></div>
+                        <p class="text-gray-400 text-sm leading-relaxed">10% at TGE, remaining balance streamed transparently via Sablier.</p>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#9d00ff] transition-all">
+                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">OTC / Private</h3><span class="text-[#9d00ff] font-black text-2xl">10%</span></div>
+                        <p class="text-gray-400 text-sm leading-relaxed">3-month lockup, traded safely through AirSwap atomic swaps.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-900 pt-8 pb-12 mt-12 relative z-10">
+        <div class="container mx-auto px-6 max-w-7xl flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-gray-500 text-sm">
+                &copy; 2024 CoreNode. All rights reserved.
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="#" class="text-gray-400 hover:text-neonBlue transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                <a href="#" class="text-gray-400 hover:text-neonPurple transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.892-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
