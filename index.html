@@ -38,8 +38,8 @@
             z-index: -2;
         }
         .node-orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: -1; animation: pulse 8s infinite alternate ease-in-out; }
-        .orb-1 { top: -10%; right: 10%; width: 350px; height: 350px; background: rgba(0, 243, 255, 0.15); }
-        .orb-2 { bottom: -10%; left: 10%; width: 450px; height: 450px; background: rgba(157, 0, 255, 0.15); }
+        .orb-1 { top: -10%; left: 10%; width: 350px; height: 350px; background: rgba(0, 243, 255, 0.15); }
+        .orb-2 { bottom: -10%; right: 10%; width: 450px; height: 450px; background: rgba(157, 0, 255, 0.15); }
         @keyframes pulse { 0% { transform: scale(1) translateY(0); opacity: 0.8; } 100% { transform: scale(1.1) translateY(30px); opacity: 1; } }
         .glass-card {
             background: rgba(15, 15, 20, 0.6); backdrop-filter: blur(12px);
@@ -54,7 +54,7 @@
     <div class="node-orb orb-1"></div>
     <div class="node-orb orb-2"></div>
 
-    <!-- شريط التنقل -->
+    <!-- Navbar -->
     <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10">
         <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-lg shadow-[0_0_15px_rgba(0,243,255,0.5)]">C</div>
@@ -70,7 +70,7 @@
 
     <main class="container mx-auto px-4 mt-8 max-w-5xl relative z-10">
         
-        <!-- الترويسة -->
+        <!-- Header -->
         <div class="text-center mb-16 mt-8">
             <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-neonBlue/30 bg-neonBlue/10 text-neonBlue text-sm font-semibold">
                 🌐 كن جزءاً من البنية التحتية
@@ -79,37 +79,38 @@
                 شغّل عقدة<br> 
                 واكسب مكافآت <span class="text-gradient">$CNDE</span>
             </h1>
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto">
                 ساهم في لامركزية شبكات Web3 (مثل شبكة Eniac) عبر تقديم موارد خادمك، واحصل على عوائد مستمرة لضمان جودة الخدمة.
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             
-            <!-- المتطلبات التقنية -->
+            <!-- Technical Requirements -->
             <div class="space-y-6">
-                <div class="glass-card p-8 border-r-4 border-r-gray-500">
+                <!-- تم تصحيح الاتجاه هنا ليكون اليمين (border-r) ليتوافق مع اللغة العربية -->
+                <div class="glass-card p-8 border-r-4 border-gray-500">
                     <h3 class="text-xl font-black mb-4">المتطلبات الدنيا (شبكة الاختبار)</h3>
                     <ul class="space-y-3 text-sm text-gray-300">
                         <li class="flex items-center gap-2"><span>⚙️</span> <strong>المعالج (CPU):</strong> 4 أنوية</li>
                         <li class="flex items-center gap-2"><span>🧠</span> <strong>الذاكرة (RAM):</strong> 8 جيجابايت</li>
                         <li class="flex items-center gap-2"><span>💾</span> <strong>التخزين:</strong> 500 جيجابايت SSD</li>
-                        <li class="flex items-center gap-2"><span>🌐</span> <strong>الشبكة:</strong> 100 ميجابت/ثانية (مستقرة)</li>
+                        <li class="flex items-center gap-2"><span>🌐</span> <strong>الشبكة:</strong> 100 ميجابت/ث (مستقرة)</li>
                     </ul>
                 </div>
 
-                <div class="glass-card p-8 border-r-4 border-r-neonBlue">
+                <div class="glass-card p-8 border-r-4 border-neonBlue">
                     <h3 class="text-xl font-black mb-4 text-neonBlue">المتطلبات الموصى بها (الشبكة الرئيسية)</h3>
                     <ul class="space-y-3 text-sm text-gray-300">
                         <li class="flex items-center gap-2"><span>⚙️</span> <strong>المعالج (CPU):</strong> 8 أنوية (أداء عالي)</li>
                         <li class="flex items-center gap-2"><span>🧠</span> <strong>الذاكرة (RAM):</strong> 16 جيجابايت أو أعلى</li>
                         <li class="flex items-center gap-2"><span>🚀</span> <strong>التخزين:</strong> 1 تيرابايت NVMe SSD</li>
-                        <li class="flex items-center gap-2"><span>🌐</span> <strong>الشبكة:</strong> 1 جيجابت/ثانية (مخصصة)</li>
+                        <li class="flex items-center gap-2"><span>🌐</span> <strong>الشبكة:</strong> 1 جيجابت/ث (مخصصة)</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- نموذج قائمة الانتظار -->
+            <!-- Waitlist Form -->
             <div class="glass-card p-8">
                 <h3 class="text-2xl font-black mb-2">قائمة الانتظار</h3>
                 <p class="text-sm text-gray-400 mb-6">البرنامج حالياً في المرحلة التجريبية المغلقة. أرسل بياناتك وسنتواصل معك قريباً.</p>
@@ -121,7 +122,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-bold mb-2 text-gray-300">حساب تيليجرام</label>
-                        <input type="text" required class="w-full bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonPurple transition-colors" placeholder="@username">
+                        <input type="text" required dir="ltr" class="w-full text-left bg-black/50 border border-white/10 rounded-lg p-3 text-white outline-none focus:border-neonPurple transition-colors" placeholder="@username">
                     </div>
                     <div>
                         <label class="block text-sm font-bold mb-2 text-gray-300">هل لديك خبرة سابقة في تشغيل العقد؟</label>
