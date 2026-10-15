@@ -1,208 +1,452 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" class="dark scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Run a Node | CoreNode</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { inter: ['Inter', 'sans-serif'] },
-                    colors: {
-                        neonBlue: '#00f3ff',
-                        neonPurple: '#9d00ff',
-                        darkBg: '#05050a',
-                    }
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuroCore Protocol ($NCORE) | AI x Web3 Infrastructure</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            background-color: #05050a;
-            color: #ffffff;
-            overflow-x: hidden;
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
+  <!-- React 18 & Babel Standalone for Single-File Execution -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
         }
-        .bg-grid {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            z-index: -2;
-        }
-        .node-orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: -1; animation: pulse 8s infinite alternate ease-in-out; }
-        .orb-1 { top: -10%; right: 10%; width: 350px; height: 350px; background: rgba(0, 243, 255, 0.15); }
-        .orb-2 { bottom: -10%; left: 10%; width: 450px; height: 450px; background: rgba(157, 0, 255, 0.15); }
-        @keyframes pulse { 0% { transform: scale(1) translateY(0); opacity: 0.8; } 100% { transform: scale(1.1) translateY(30px); opacity: 1; } }
-        .glass-card {
-            background: rgba(15, 15, 20, 0.6); backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; transition: all 0.3s ease;
-        }
-        .text-gradient { background: linear-gradient(90deg, #00f3ff, #9d00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    </style>
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #06080F;
+      color: #F1F5F9;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    .terminal-line {
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+  </style>
 </head>
-<body class="antialiased relative min-h-screen pb-20">
+<body class="antialiased selection:bg-cyan-400 selection:text-slate-950 overflow-x-hidden">
+  <div id="root"></div>
 
-    <div class="bg-grid"></div>
-    <div class="node-orb orb-1"></div>
-    <div class="node-orb orb-2"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-    <!-- Navbar (English Only) -->
-    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10 max-w-7xl">
-        <a href="index.html" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neonBlue to-neonPurple flex items-center justify-center font-bold text-lg shadow-[0_0_15px_rgba(0,243,255,0.5)]">C</div>
-            <span class="text-2xl font-black tracking-wider hidden md:block">CoreNode</span>
-        </a>
-        <div class="flex items-center gap-6">
-            <!-- Main Navigation Links -->
-            <a href="#networks" class="text-sm text-gray-400 hover:text-white font-bold transition-colors">Networks</a>
-            <a href="#tokenomics" class="text-sm text-gray-400 hover:text-white font-bold transition-colors">Tokenomics</a>
-            <a href="#roadmap" class="text-sm text-gray-400 hover:text-white font-bold transition-colors">Roadmap</a>
-            
-            <a href="node.html" class="text-sm font-bold text-neonPurple hover:text-white transition-colors">Run a Node</a>
-            <a href="dashboard.html" class="glass-card px-5 py-2 text-sm font-bold hover:bg-white/5 transition-colors border-white/20">
-                Dev Portal
-            </a>
-        </div>
-    </nav>
+    // ==========================================
+    // CONTENT DICTIONARY (English Active | Ready for future zh-CN expansion)
+    // ==========================================
+    const CONTENT = {
+      badge: 'Next-Gen AI x Web3 Infrastructure Protocol',
+      nav: {
+        architecture: 'Architecture',
+        tokenomics: 'Tokenomics',
+        roadmap: 'Roadmap',
+        otc: 'OTC & Whitelist'
+      },
+      connect: 'Connect Wallet',
+      connecting: 'Connecting...',
+      heroTitle1: 'The Autonomous AI Layer Powering ',
+      heroTitleHighlight: 'Decentralized Infrastructure',
+      heroSub:
+        'NeuroCore ($NCORE) merges real-time AI inference with high-velocity Web3 nodes—delivering predictive smart contract security, automated RPC routing, and verifiable GPU compute across chains.',
+      ctaPrimary: 'Join Early Access & OTC Portal',
+      ctaSecondary: 'Explore Technical Docs',
+      metrics: [
+        { value: '< 9.2ms', label: 'AI Routing Latency' },
+        { value: '99.99%', label: 'Decentralized Uptime' },
+        { value: '120K+', label: 'Peak TPS Capacity' },
+        { value: '14,800+', label: 'Active Smart Nodes' }
+      ],
+      archTitle: 'Engineered for Institutional Scale',
+      archSub:
+        'A three-pillar modular protocol bridging artificial intelligence with high-speed on-chain execution.',
+      tabs: {
+        routing: {
+          title: 'AI-Driven Smart RPC Routing',
+          desc: 'Machine learning models predict network congestion before it happens, dynamically balancing dApp traffic across global low-latency nodes.',
+          code: `// Initialize NeuroCore AI Router
+import { NeuroProvider } from '@neurocore/sdk';
 
-    <!-- Main Content Sections -->
-    <main class="relative z-10">
-        
-        <!-- Hero Section -->
-        <section class="min-h-screen flex flex-col items-center justify-center pt-20 pb-12">
-            <div class="mb-8 relative">
-                <div class="absolute inset-0 bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] blur-[60px] opacity-25 rounded-full"></div>
-                <img src="1.png" alt="CoreNode Logo" class="relative z-10 w-44 h-44 md:w-52 md:h-52 object-contain drop-shadow-[0_0_25px_rgba(157,0,255,0.4)]">
-            </div>
-            
-            <div class="text-center max-w-4xl px-6">
-                <div class="inline-block mb-4 px-4 py-1.5 rounded-full border border-neonPurple/30 bg-neonPurple/10 text-neonPurple text-sm font-semibold">
-                    🚀 Next-Gen DePIN Infrastructure
+const provider = new NeuroProvider({
+  network: 'ethereum-mainnet',
+  aiOptimization: 'ultra-low-latency',
+  mevProtection: true
+});
+
+const tx = await provider.executeSmartRoute(payload);`
+        },
+        security: {
+          title: 'Predictive On-Chain Firewall',
+          desc: 'Autonomous AI agents inspect mempool transactions and ERC-4337 smart accounts in real time, neutralizing exploits prior to block finality.',
+          code: `// Enable AI Smart Contract Guard
+const securityAudit = await provider.aiFirewall.scan({
+  contractAddress: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+  simulationMode: 'deep-neural-check'
+});
+
+if (securityAudit.threatLevel === 'ZERO') {
+  await wallet.signAndSendTransaction(tx);
+}`
+        },
+        compute: {
+          title: 'Verifiable GPU Compute Network',
+          desc: 'Permissionless DePIN layer allowing hardware operators to monetize idle GPU clusters for zero-knowledge AI training and inference.',
+          code: `// Deploy Decentralized AI Inference Job
+const job = await provider.compute.deployModel({
+  model: 'neuro-llm-v3-quantized',
+  zkProofRequired: true,
+  maxGasBudget: '15 $NCORE'
+});
+
+console.log('Verified Output Hash:', job.proofHash);`
+        }
+      },
+      tokenTitle: '$NCORE Tokenomics & Yield Simulator',
+      tokenSub:
+        'Designed for sustainable value capture, institutional liquidity, and active node incentives.',
+      calcTitle: 'Node Staking Yield Estimator',
+      calcAmountLabel: 'Staked Amount ($NCORE)',
+      calcYearly: 'Estimated Annual Yield (24% APY)',
+      calcMonthly: 'Monthly Node Rewards',
+      allocations: [
+        { name: 'Ecosystem & AI Node Rewards', pct: '35%' },
+        { name: 'Strategic & Institutional / OTC', pct: '20%' },
+        { name: 'Exchange Liquidity & Market Making', pct: '15%' },
+        { name: 'Core Protocol Development', pct: '18%' },
+        { name: 'Community & Incentivized Testnet', pct: '12%' }
+      ],
+      roadmapTitle: 'Strategic Execution Roadmap',
+      roadmap: [
+        {
+          q: 'Phase 1',
+          title: 'AI Core & Smart Audit',
+          desc: 'Protocol architecture, neural firewall training, and institutional security audits.',
+          done: true
+        },
+        {
+          q: 'Phase 2',
+          title: 'Incentivized AI Testnet',
+          desc: 'Public SDK release, smart node onboarding, and early operator reward campaigns.',
+          done: true
+        },
+        {
+          q: 'Phase 3',
+          title: 'Mainnet Launch & TGE',
+          desc: '$NCORE Token Generation Event, Tier-1 CEX/DEX listings, and live staking portal.',
+          done: false
+        },
+        {
+          q: 'Phase 4',
+          title: 'Cross-Chain AI Marketplace',
+          desc: 'Permissionless AI agent deployment across EVM, Solana, and Asian/Global L2 ecosystems.',
+          done: false
+        }
+      ],
+      formTitle: 'Early Access, Node Whitelist & Institutional Portal',
+      formSub:
+        'Register for prioritized testnet node allocation, developer SDK keys, or institutional OTC & Market Maker partnerships.',
+      roleInvestor: 'Institutional / VC / OTC Partner',
+      roleDev: 'Developer / Node Operator',
+      roleComm: 'Early Community Member',
+      emailPlaceholder: 'Enter official email address...',
+      walletPlaceholder: 'EVM Wallet Address (0x...) - Optional',
+      submitBtn: 'Submit Priority Application',
+      successMsg:
+        'Application registered on-chain. Our institutional desk will reach out within 24 hours.'
+    };
+
+    // ==========================================
+    // INLINE SVG ICONS (Zero External Dependency Risk)
+    // ==========================================
+    const IconCpu = () => (
+      <svg className="w-6 h-6 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <rect x="4" y="4" width="16" height="16" rx="2" />
+        <rect x="9" y="9" width="6" height="6" />
+        <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
+      </svg>
+    );
+
+    const IconWallet = () => (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+      </svg>
+    );
+
+    const IconZap = () => (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+      </svg>
+    );
+
+    const IconShield = () => (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+    );
+
+    const IconServer = () => (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+        <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+        <line x1="6" y1="6" x2="6.01" y2="6" />
+        <line x1="6" y1="18" x2="6.01" y2="18" />
+      </svg>
+    );
+
+    const IconCheck = () => (
+      <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+        <polyline points="22 4 12 14.01 9 11.01" />
+      </svg>
+    );
+
+    // ==========================================
+    // MAIN APPLICATION COMPONENT
+    // ==========================================
+    function App() {
+      const [walletAddress, setWalletAddress] = useState(null);
+      const [isConnecting, setIsConnecting] = useState(false);
+      const [activeTab, setActiveTab] = useState('routing');
+      const [copied, setCopied] = useState(false);
+
+      // Staking Yield Calculator State
+      const [stakeAmount, setStakeAmount] = useState(25000);
+      const apyRate = 0.24; // 24% APY
+
+      // Form State
+      const [email, setEmail] = useState('');
+      const [userWallet, setUserWallet] = useState('');
+      const [partnerType, setPartnerType] = useState('investor');
+      const [submitted, setSubmitted] = useState(false);
+
+      // Live AI Terminal Logs
+      const [logs, setLogs] = useState([
+        '[AI-CORE] Initializing Neural RPC Routing Layer v2.4...',
+        '[SECURITY] Zero-day exploit scanner active on EVM mempool.',
+        '[NODE-09] Latency optimized: 8.4ms | Throughput: 104,200 TPS'
+      ]);
+
+      useEffect(() => {
+        const sampleLogs = [
+          '[AI-AGENT] Verified smart contract 0x8F2...91B — Risk Score: 0.01% (SAFE)',
+          '[ROUTER] Redirected 14,500 RPC calls to Singapore AI-Node #12 (7.8ms)',
+          '[COMPUTE] Distributed GPU cluster #18 completed LLM inference proof.',
+          '[MEV-SHIELD] Blocked malicious sandwich attack on block #19482011.',
+          '[STAKING] Epoch #84 rewards distributed to 14,820 active node operators.'
+        ];
+        let index = 0;
+        const interval = setInterval(() => {
+          setLogs((prev) => [...prev.slice(-4), sampleLogs[index % sampleLogs.length]]);
+          index++;
+        }, 2800);
+        return () => clearInterval(interval);
+      }, []);
+
+      // Real EVM Wallet Check + Fallback Simulation
+      const handleConnectWallet = async () => {
+        if (walletAddress) {
+          setWalletAddress(null);
+          return;
+        }
+        setIsConnecting(true);
+        try {
+          if (typeof window.ethereum !== 'undefined') {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            if (accounts && accounts[0]) {
+              const addr = accounts[0];
+              setWalletAddress(addr.slice(0, 6) + '...' + addr.slice(-4));
+              setIsConnecting(false);
+              return;
+            }
+          }
+        } catch (err) {
+          // Fallback to demo wallet if user cancels or uses regular mobile browser
+        }
+        setTimeout(() => {
+          setWalletAddress('0x71C...9A2B');
+          setIsConnecting(false);
+        }, 700);
+      };
+
+      const handleCopyCode = () => {
+        navigator.clipboard.writeText(CONTENT.tabs[activeTab].code);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      };
+
+      const handleFormSubmit = (e) => {
+        e.preventDefault();
+        if (!email) return;
+        setSubmitted(true);
+      };
+
+      return (
+        <div className="min-h-screen relative">
+          {/* Cyber Background Glow */}
+          <div className="fixed inset-0 pointer-events-none z-0">
+            <div className="absolute top-[-10%] left-[15%] w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[130px]" />
+            <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[130px]" />
+          </div>
+
+          {/* 1. Navbar */}
+          <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#06080F]/85 border-b border-slate-800/80">
+            <div className="max-w-7xl mx-auto px-5 sm:px-6 h-20 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-indigo-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
+                  <IconCpu />
                 </div>
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-                    No more downtime.<br>
-                    Faster, smarter <span class="text-gradient">RPC Nodes</span>.
+                <div>
+                  <span className="text-lg sm:text-xl font-bold tracking-tight text-white">
+                    NeuroCore
+                  </span>
+                  <span className="text-[11px] font-mono text-cyan-400 block">$NCORE PROTOCOL</span>
+                </div>
+              </div>
+
+              <nav className="hidden md:flex items-center gap-8 text-sm text-slate-300 font-medium">
+                <a href="#architecture" className="hover:text-cyan-400 transition">{CONTENT.nav.architecture}</a>
+                <a href="#tokenomics" className="hover:text-cyan-400 transition">{CONTENT.nav.tokenomics}</a>
+                <a href="#roadmap" className="hover:text-cyan-400 transition">{CONTENT.nav.roadmap}</a>
+                <a href="#join" className="hover:text-cyan-400 transition">{CONTENT.nav.otc}</a>
+              </nav>
+
+              <div className="flex items-center gap-2.5">
+                <div className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-800 bg-slate-900/70 text-xs font-mono text-slate-300">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span>EN</span>
+                </div>
+
+                <button
+                  onClick={handleConnectWallet}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-indigo-500 hover:from-cyan-300 hover:to-indigo-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition"
+                >
+                  <IconWallet />
+                  <span>{isConnecting ? CONTENT.connecting : walletAddress ? walletAddress : CONTENT.connect}</span>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          {/* 2. Hero Section */}
+          <section className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 pt-12 pb-20 lg:pt-20">
+            <div className="grid lg:grid-cols-12 gap-10 items-center">
+              <div className="lg:col-span-7 space-y-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-medium">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                  <span>{CONTENT.badge}</span>
+                </div>
+
+                <h1 className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight">
+                  {CONTENT.heroTitle1}
+                  <span className="bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">
+                    {CONTENT.heroTitleHighlight}
+                  </span>
                 </h1>
-                <p class="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed max-w-2xl mx-auto">
-                    We provide developers with high-performance, decentralized infrastructure. Connect your dApps to mainnets and testnets securely, rapidly, and with zero downtime.
+
+                <p className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+                  {CONTENT.heroSub}
                 </p>
-                
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-                    <a href="#" class="w-full sm:w-auto px-8 py-3.5 rounded-full font-bold bg-gradient-to-r from-[#00f3ff] to-[#9d00ff] text-white text-center hover:shadow-[0_0_25px_rgba(0,243,255,0.5)] transition-all">Start Building</a>
-                    <a href="#" class="w-full sm:w-auto px-8 py-3.5 rounded-full font-bold border border-gray-700 hover:border-[#00f3ff] bg-gray-900/50 text-white text-center transition-all">Read Whitepaper</a>
+
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <a
+                    href="#join"
+                    className="px-6 py-3.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-sm shadow-xl shadow-cyan-500/20 transition"
+                  >
+                    {CONTENT.ctaPrimary} →
+                  </a>
+                  <a
+                    href="#architecture"
+                    className="px-6 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-200 font-semibold text-sm transition"
+                  >
+                    {CONTENT.ctaSecondary}
+                  </a>
                 </div>
-            </div>
-        </section>
+              </div>
 
-        <!-- Partners Section -->
-        <section class="py-12 border-y border-gray-900/50 bg-black/20">
-            <div class="container mx-auto px-6 max-w-6xl text-center">
-                <p class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-8">Ecosystem Partners & Future Backers</p>
-                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70">
-                    <span class="text-xl font-bold font-sans">BingX</span>
-                    <span class="text-xl font-bold font-sans">MEXC</span>
-                    <span class="text-xl font-bold font-sans">Gate.io</span>
-                    <span class="text-xl font-bold font-sans">Echo Trade MM</span>
-                    <span class="text-xl font-bold font-sans">Akarun</span>
+              {/* Live AI Terminal */}
+              <div className="lg:col-span-5">
+                <div className="rounded-2xl bg-[#0B0F1A] border border-slate-800 shadow-2xl overflow-hidden">
+                  <div className="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="w-3 h-3 rounded-full bg-rose-500/80" />
+                      <span className="w-3 h-3 rounded-full bg-amber-500/80" />
+                      <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+                    </div>
+                    <span className="text-xs font-mono text-slate-400">neurocore-ai-node-v2.4</span>
+                  </div>
+
+                  <div className="p-5 font-mono text-xs space-y-3 min-h-[250px] flex flex-col justify-between">
+                    <div className="space-y-2.5">
+                      {logs.map((log, i) => (
+                        <div key={i} className="text-slate-300 border-l-2 border-cyan-500/60 pl-3 py-0.5">
+                          <span className="text-cyan-400 mr-2">&gt;</span>
+                          {log}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                      <span className="text-emerald-400 font-semibold terminal-line">
+                        ● AI Consensus: SYNCHRONIZED
+                      </span>
+                      <span>ERC-4337 Guard: ACTIVE</span>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
 
-        <!-- Networks / Routing Section -->
-        <section id="networks" class="py-16 text-center">
-            <p class="text-sm text-gray-400 mb-4">Smart routing supported for top decentralized networks & protocols</p>
-            <div class="flex flex-wrap justify-center gap-6 text-sm font-semibold">
-                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-neonBlue"></span> Eniac Mainnet</span>
-                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-gray-500"></span> Eniac Testnet</span>
-                <span class="flex items-center gap-2 text-neonPurple">AirSwap OTC</span>
-            </div>
-        </section>
-
-        <!-- Tokenomics Section -->
-        <section id="tokenomics" class="py-24 relative">
-            <div class="container mx-auto px-6 max-w-6xl">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-5xl font-black mb-4">The Power of <span class="text-gradient">$CNDE</span></h2>
-                    <p class="text-gray-400">The core engine of our decentralized infrastructure and market making economy</p>
+            {/* Metrics Strip */}
+            <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {CONTENT.metrics.map((m, idx) => (
+                <div key={idx} className="p-6 rounded-2xl bg-slate-900/50 border border-slate-800/80 text-center">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">{m.value}</div>
+                  <div className="text-xs sm:text-sm text-slate-400 mt-1">{m.label}</div>
                 </div>
-                
-                <!-- Use Case Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-                    <div class="glass-card p-8 text-center hover:border-neonBlue transition-all">
-                        <div class="text-4xl mb-4">⛽</div>
-                        <h3 class="text-xl font-bold text-neonBlue mb-3">Pay for Requests</h3>
-                        <p class="text-gray-400 text-sm">Use the token to pay for premium RPC link generation on high-traffic networks without rate limits.</p>
-                    </div>
-                    <div class="glass-card p-8 text-center hover:border-neonPurple transition-all">
-                        <div class="text-4xl mb-4">💧</div>
-                        <h3 class="text-xl font-bold text-neonPurple mb-3">Liquidity Provision</h3>
-                        <p class="text-gray-400 text-sm">Stake tokens to participate in liquidity pools, supporting network stability and earning platform yields.</p>
-                    </div>
-                    <div class="glass-card p-8 text-center hover:border-yellow-400 transition-all">
-                        <div class="text-4xl mb-4">⚡</div>
-                        <h3 class="text-xl font-bold text-yellow-400 mb-3">Whale Trades Priority</h3>
-                        <p class="text-gray-400 text-sm">Exclusive discounts when using execution algorithms (TWAP) and direct P2P protocols.</p>
-                    </div>
-                </div>
-
-                <!-- Distribution Grid -->
-                <div class="mb-14 text-center mt-12 border-t border-gray-900 pt-16">
-                    <h2 class="text-2xl md:text-4xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#00f3ff] to-[#9d00ff]">Token Distribution</h2>
-                    <p class="text-gray-400 text-sm uppercase tracking-wider mb-1">Total Supply</p>
-                    <p class="text-3xl md:text-4xl font-black tracking-widest text-white">1,000,000,000</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#00f3ff] transition-all">
-                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">DePIN Rewards</h3><span class="text-[#00f3ff] font-black text-2xl">35%</span></div>
-                        <p class="text-gray-400 text-sm leading-relaxed">Dynamic emissions for network reliability and staking incentives.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#9d00ff] transition-all">
-                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">CEX / DEX Liquidity</h3><span class="text-[#9d00ff] font-black text-2xl">20%</span></div>
-                        <p class="text-gray-400 text-sm leading-relaxed">Allocated for trading liquidity pools and exchange listing fees.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#00f3ff] transition-all">
-                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">Team & Advisors</h3><span class="text-[#00f3ff] font-black text-2xl">15%</span></div>
-                        <p class="text-gray-400 text-sm leading-relaxed">12-month cliff followed by 24 months linear vesting schedule.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#9d00ff] transition-all">
-                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">Market Making (MM)</h3><span class="text-[#9d00ff] font-black text-2xl">10%</span></div>
-                        <p class="text-gray-400 text-sm leading-relaxed">100% unlocked at TGE for active order book stabilization.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#00f3ff] transition-all">
-                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">Marketing & KOLs</h3><span class="text-[#00f3ff] font-black text-2xl">10%</span></div>
-                        <p class="text-gray-400 text-sm leading-relaxed">10% at TGE, remaining balance streamed transparently via Sablier.</p>
-                    </div>
-                    <div class="p-6 rounded-2xl border border-gray-800 bg-gray-900/40 hover:border-[#9d00ff] transition-all">
-                        <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">OTC / Private</h3><span class="text-[#9d00ff] font-black text-2xl">10%</span></div>
-                        <p class="text-gray-400 text-sm leading-relaxed">3-month lockup, traded safely through AirSwap atomic swaps.</p>
-                    </div>
-                </div>
+              ))}
             </div>
-        </section>
+          </section>
 
-    </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-gray-900 pt-8 pb-12 mt-12 relative z-10">
-        <div class="container mx-auto px-6 max-w-7xl flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-gray-500 text-sm">
-                &copy; 2024 CoreNode. All rights reserved.
+          {/* 3. Architecture & SDK Section */}
+          <section id="architecture" className="relative z-10 max-w-7xl mx-auto px-5 sm:px-6 py-20 border-t border-slate-900">
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold">{CONTENT.archTitle}</h2>
+              <p className="text-slate-400 mt-3 text-sm sm:text-base">{CONTENT.archSub}</p>
             </div>
-            <div class="flex items-center gap-6">
-                <a href="#" class="text-gray-400 hover:text-neonBlue transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                <a href="#" class="text-gray-400 hover:text-neonPurple transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.892-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
-            </div>
-        </div>
-    </footer>
 
-</body>
-</html>
+            <div className="grid lg:grid-cols-12 gap-8 items-start">
+              <div className="lg:col-span-5 space-y-3">
+                {[
+                  { id: 'routing', icon: <IconZap />, label: CONTENT.tabs.routing.title },
+                  { id: 'security', icon: <IconShield />, label: CONTENT.tabs.security.title },
+                  { id: 'compute', icon: <IconServer />, label: CONTENT.tabs.compute.title }
+                ].map((item) => {
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={`w-full text-left p-5 rounded-2xl border transition flex items-center gap-4 ${
